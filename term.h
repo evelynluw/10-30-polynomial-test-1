@@ -21,7 +21,7 @@ class term
         fraction getCoeff();
         char getVar();
         void setTerm(const fraction &c, const fraction p = 0);
-        double evaluate(const fraction& other);
+        fraction evaluate(const fraction& other);
         fraction operator()(const fraction& other);
         //y = x(3/4); where y and x are terms
 

@@ -18,7 +18,7 @@ class polynomial
         polynomial(const polynomial &other);
 
         //Public Functions
-        double evaluate(const fraction &other);
+        fraction evaluate(const fraction &other);
         void addterm(const term &term_arg);
         std::string polyString();
 

@@ -75,6 +75,9 @@ class fraction
         fraction operator/(const fraction &x,const fraction &y);
 
         friend
+        fraction operator^(const fraction &x,const fraction &y);
+
+        friend
         bool operator==(const fraction &x,const fraction &y);
 
         friend

@@ -195,7 +195,10 @@ void fraction::DecimaltoFrac(const double &other, int &num_arg, int &denom_arg) 
     getline(ss,fractionPart, '\n');
     int numDigits = fractionPart.size();
     denom_arg = makeDenom(numDigits, allDecimalsTheSame(fractionPart));
-    num_arg = denom_arg * std::stoi(wholePart) + std::stoi(fractionPart);
+    if(fractionPart.empty())
+        num_arg = denom_arg * std::stoi(wholePart);
+    else
+        num_arg = denom_arg * std::stoi(wholePart) + std::stoi(fractionPart);
 }
 
 double fraction::makeDouble(int intPart, int deciPart) {

@@ -63,13 +63,14 @@ term& term::operator/=(const term& other)
     return (*this = *this / other);
 }
 
-double term::evaluate(const fraction& other) //TESTED
+fraction term::evaluate(const fraction& other) //TESTED
 {
-   double temp = coeff.evaluate()*power.pow(other, power);
-   return temp;
+//   double temp = coeff.evaluate()*power.pow(other, power);
+    fraction temp = coeff*(other^power);
+    return temp;
 }
 
-fraction term::operator()(const fraction& other)
+fraction term::operator()(const fraction& other) //TESTED
 {
    return evaluate(other);
 }

@@ -104,7 +104,3 @@ std::istream& operator>>(std::istream& in, const term& t)
 
 
 
-
-
-
-

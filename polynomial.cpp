@@ -24,8 +24,8 @@ polynomial::polynomial(const term &other)
 }
 
 //PUBLIC FUNCTIONS
-double polynomial::evaluate(const fraction &other) { //TESTED
-    double temp = 0;
+fraction polynomial::evaluate(const fraction &other) { //TESTED
+    fraction temp(0);
     for(std::vector<term>::iterator it = poly.begin(); it != poly.end(); ++it) {
         temp += it->evaluate(other);
     }
@@ -84,12 +84,12 @@ polynomial& polynomial::operator/=(const polynomial &other)
     return *this;
 }
 
-fraction polynomial::operator()(const fraction &other)
+fraction polynomial::operator()(const fraction &other) //TESTED
 {
-    fraction result;
-    for(unsigned int i = 0; i < poly.size(); ++i)
-        result += poly[i](other);
-    return result;
+//    fraction result;
+//    for(unsigned int i = 0; i < poly.size(); ++i)
+//        result += poly[i](other);
+    return this->evaluate(other);
 }
 
 
