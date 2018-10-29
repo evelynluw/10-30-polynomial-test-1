@@ -8,9 +8,7 @@ term::term(char v)
 
 term::term(const fraction &c, const fraction& p, char v)
 {
-    coeff = c;
-    power = p;
-    var = v;
+    setTerm(c, p, v);
 }
 
 term::~term()
@@ -46,10 +44,11 @@ char term::getVar() {
     return var;
 }
 
-void term::setTerm(const fraction &c, const fraction p)
+void term::setTerm(const fraction &c, const fraction p, char v)
 {
     coeff = c;
     power = p;
+    var = v;
 }
 
 

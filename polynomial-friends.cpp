@@ -82,12 +82,20 @@ std::ostream& operator<<(std::ostream& out, const polynomial &other) //TESTED
 
 std::istream& operator>>(std::istream& in, polynomial &p)
 {
+    //still have problems with line endings
+    //plan to take the line as a string
+    //and parse the string as a couple of
+    //terms...
     term temp;
-    while(in>>temp){
+//    p = polynomial(line)
+    while(in.peek()!='\n'){
+        //GETLINE
+        //PARSE FOR EMPTY SPACES
+        //
+        in>>temp;
         p.poly.push_back(temp);
-        if(in.peek() == '+' || in.peek() == '-')
-            in.get();
     }
+
     p.sort();
     p.combineTerms();
     return in;

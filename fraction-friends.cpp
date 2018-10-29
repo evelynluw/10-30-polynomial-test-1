@@ -1,7 +1,7 @@
 #include "fraction.h"
 //#include <typeinfo>
 
-std::ostream& operator<<(std::ostream& out, const fraction &frac)
+std::ostream& operator<<(std::ostream& out, const fraction &frac) //tested
 {
     out<<frac.num;
     if(frac.denom != 1)
@@ -9,7 +9,7 @@ std::ostream& operator<<(std::ostream& out, const fraction &frac)
     return out;
 }
 
-std::istream& operator>>(std::istream& in, fraction &frac)
+std::istream& operator>>(std::istream& in, fraction &frac) //tested
 {
     char junk;
     int part1, part2;
@@ -17,14 +17,14 @@ std::istream& operator>>(std::istream& in, fraction &frac)
     {
         if(in.peek() == '/') {
             in>>junk>>part2;
-            frac.num = part1;
-            frac.denom = part2;
+            frac.setValue(part1, part2);
         }
-        if(in.peek() == '.')
+        else if(in.peek() == '.')
         {
             in>>junk>>part2;
             double doublePart = frac.makeDouble(part1, part2);
             frac.DecimaltoFrac(doublePart, frac.num, frac.denom);
+            frac.reduce();
         }
         else{
             frac.num = part1;
@@ -32,7 +32,7 @@ std::istream& operator>>(std::istream& in, fraction &frac)
         }
     }
     else
-        std::cout<<"Hit End of File"<<std::endl;
+        std::cout<<"Wrong fraction input"<<std::endl;
     return in;
 }
 

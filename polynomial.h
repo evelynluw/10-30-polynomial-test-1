@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 #include "term.h"
-#include "fraction.h"
 
 class polynomial  //this is pavan testing out git
 {

@@ -15,4 +15,5 @@ SOURCES += \
 HEADERS += \
     term.h \
     polynomial.h \
-    fraction.h
+    fraction.h \
+    constants.h

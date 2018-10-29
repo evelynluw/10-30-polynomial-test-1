@@ -69,22 +69,41 @@ bool operator<(const term &x, const term &y)
         return x.power < y.power;
 }
 
-std::ostream& operator<<(std::ostream& out, const term& t)
+std::ostream& operator<<(std::ostream& out, const term& t) //TESTED
 {
-    out<<t.coeff<<t.var<<'^'<<t.power;
+    if(t.coeff != 1)
+        out<<t.coeff;
+    out<<t.var;
+    if(t.power != 1)
+        out<<'^'<<t.power;
     return out;
 }
 
 
-std::istream& operator>>(std::istream& in, const term& t)
+std::istream& operator>>(std::istream& in, term& t) //TESTED
 {
     /* the idea here is to look for ^
      * and using string functions to find the
      * coeff, var, and power.
      * stringstream is going to be used very carefully...
      */
-    char junk;
-    in>>t.coeff>>t.var>>junk>>t.power;
+
+    //assuming there will only be 3 types of
+    //inputs: 3/2x^2, x^5, 5
+    fraction coeff(1), power(1);
+    char var, junk;
+    if(isdigit(in.peek())) { //[2]x^2
+        in>>coeff;
+    }
+    if(isalpha(in.peek())) { //[x]^2
+        in>>var;
+    }
+    if(in.peek()=='^') { //x[^]2
+        in>>junk>>power;
+    }
+    if(in.peek()=='\n') //I guess??
+        in.ignore();
+    t.setTerm(coeff, power, var);
     return in;
 }
 

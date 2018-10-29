@@ -172,7 +172,7 @@ bool fraction::allDecimalsTheSame(const std::string &fracPart)
     if(fracPart.size()<3)
         return false;
     bool yes = true;
-    for(int i = 1; yes && i < fracPart.size(); ++i)
+    for(unsigned int i = 1; yes && i < fracPart.size(); ++i)
         yes = (fracPart[0] == fracPart[i]);
     return yes;
 }

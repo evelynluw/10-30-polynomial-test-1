@@ -4,6 +4,7 @@
 #include <fstream>
 #include <cmath>
 #include <sstream>
+#include "constants.h"
 
 class fraction
 {
