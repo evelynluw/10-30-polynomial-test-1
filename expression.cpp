@@ -1,17 +1,17 @@
-#include "calculate.h"
+#include "expression.h"
 
 //PUBLIC
 
 //..CONSTRUCTOR
 
-calculate::calculate()
+expression::expression()
 {
     //initialization done in class variable declarations
 }
 
 //..MAIN PROGRAM
 
-void calculate::run(int argc, char *argv[]) {
+void expression::run(int argc, char *argv[]) {
     bool record = false;
     switch (argc) {
     case 0:
@@ -46,7 +46,7 @@ void calculate::run(int argc, char *argv[]) {
 }
 
 //..TESTING
-void calculate::test() {
+void expression::test() {
     saveStringToFile("test.txt", "the fist line");
     saveStringToFile("test.txt", "the second line", true);
 }
@@ -55,11 +55,11 @@ void calculate::test() {
 
 //..MAIN FUNCTIONS
 
-void calculate::prompt() { //TESTED
+void expression::prompt() { //TESTED
     cout<<"INPUT: ";
 }
 
-string calculate::getCommand(istream& in) { //TESTED: cout<<getCommand(cin)<<endl;
+string expression::getCommand(istream& in) { //TESTED: cout<<getCommand(cin)<<endl;
     if(in.peek()=='\n')
         exit(1);
     string temp;
@@ -67,7 +67,7 @@ string calculate::getCommand(istream& in) { //TESTED: cout<<getCommand(cin)<<end
     return temp;
 }
 
-void calculate::execCommand(string command) {
+void expression::execCommand(string command) {
     /* sample argm:
      * LET F = 2X + 4
      * EVAL F(1/4)
@@ -129,7 +129,7 @@ void calculate::execCommand(string command) {
     algebra(noSpaceCommand); //"F=G+H", TESTED
 }
 
-void calculate::let(char funcName, string exp) { //NOT FULLY WORKING - setExp...
+void expression::let(char funcName, string exp) { //NOT FULLY WORKING - setExp...
     /* sample argm:
      * 2X+4
      */
@@ -137,7 +137,7 @@ void calculate::let(char funcName, string exp) { //NOT FULLY WORKING - setExp...
     print(funcName);
 }
 
-void calculate::eval(char funcName, fraction value) { //PARTIALLY TESTED
+void expression::eval(char funcName, fraction value) { //PARTIALLY TESTED
     stringstream ss;
     string temp;
     ss<<funcName<<'('<<value<<") = "
@@ -146,7 +146,7 @@ void calculate::eval(char funcName, fraction value) { //PARTIALLY TESTED
     cout<<temp<<endl;
 }
 
-void calculate::print(char funcName) { //TESTED
+void expression::print(char funcName) { //TESTED
     stringstream ss;
     string temp;
     ss<<funcName<<" = "<<exps[index(funcName)];
@@ -154,7 +154,7 @@ void calculate::print(char funcName) { //TESTED
     cout<<temp<<endl;
 }
 
-void calculate::load(string& filename) {
+void expression::load(string& filename) {
     ifstream ifs;
     string line;
     if(filename.empty()) {
@@ -184,7 +184,7 @@ void calculate::load(string& filename) {
     }
 }
 
-void calculate::save(string& filename) {
+void expression::save(string& filename) {
     ifstream ifs;
     ofstream ofs;
     string line;
@@ -208,7 +208,7 @@ void calculate::save(string& filename) {
     }
 }
 
-void calculate::algebra(string algebraExp) { //TESTED
+void expression::algebra(string algebraExp) { //TESTED
     /* sample argm:
      * F=G+H
      * F=G-H
@@ -252,15 +252,15 @@ void calculate::algebra(string algebraExp) { //TESTED
 
 }
 
-void calculate::execute(string filename) {
+void expression::execute(string filename) {
 
 }
 
-void calculate::record(string filename) {
+void expression::record(string filename) {
 
 }
 
-void calculate::newton(char funcName, fraction initGuess) {
+void expression::newton(char funcName, fraction initGuess) {
     polynomial exp1(exps[index(funcName)]),
             exp2 = firstDerivative(exp1);
     double x = initGuess.evaluate();
@@ -276,7 +276,7 @@ void calculate::newton(char funcName, fraction initGuess) {
 
 //..ADDITIONAL FUNCTIONS
 
-string calculate::toUpper(string str) { //TESTED
+string expression::toUpper(string str) { //TESTED
     string temp;
     for(string::iterator it=str.begin(); it!=str.end(); ++it){
         temp.push_back(toupper(*it));
@@ -284,7 +284,7 @@ string calculate::toUpper(string str) { //TESTED
     return temp;
 }
 
-string calculate::delSpace(string str) { //TESTED
+string expression::delSpace(string str) { //TESTED
     string temp=str;
     size_t pos=0;
     while((pos=temp.find(" ", pos+1))!=string::npos) {
@@ -293,11 +293,11 @@ string calculate::delSpace(string str) { //TESTED
     return temp;
 }
 
-int calculate::index(char funcName) { //TESTED
+int expression::index(char funcName) { //TESTED
     return toupper(funcName)-65;
 }
 
-void calculate::saveStringToFile(string filename, string line, bool append) {
+void expression::saveStringToFile(string filename, string line, bool append) {
     ofstream ofs;
     if(append)
         ofs.open(filename, ios_base::app);
@@ -307,7 +307,7 @@ void calculate::saveStringToFile(string filename, string line, bool append) {
     //check if there is line endings
 }
 
-void calculate::askString(string prompt, string& theString) {
+void expression::askString(string prompt, string& theString) {
     cout<<prompt;
     cin>>theString;
 }

@@ -1,5 +1,5 @@
-#ifndef CALCULATE_H
-#define CALCULATE_H
+#ifndef EXPRESSION_H
+#define EXPRESSION_H
 
 #include "polynomial.h"
 #include <iostream>
@@ -8,11 +8,11 @@
 
 using namespace std;
 
-class calculate
+class expression
 {
 public:
     //constructor
-    calculate();
+    expression();
     //UI for the program
     void run(int argc, char *argv[]);
 
@@ -49,4 +49,4 @@ private:
 
 };
 
-#endif // CALCULATE_H
+#endif // EXPRESSION_H

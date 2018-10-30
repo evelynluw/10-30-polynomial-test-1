@@ -1,16 +1,16 @@
 #include <iostream>
 #include <string>
-#include "calculate.h"
+#include "expression.h"
 
 using namespace std;
 
 void test_eval();
 void test_cin();
-void test_calculate();
+void test_expression();
 
 int main(int argc, char *argv[])
 {
-    calculate program;
+    expression program;
     program.run(argc, argv);
     return 0;
 }
@@ -49,7 +49,7 @@ void test_cin() {
 //    cout<<frac3<<endl;
 }
 
-void test_calculate(){
+void test_expression(){
 
 }
 

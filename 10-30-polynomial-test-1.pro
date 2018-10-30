@@ -9,16 +9,16 @@ SOURCES += \
     term.cpp \
     fraction-friends.cpp \
     fraction.cpp \
-    calculate.cpp \
     polynomial.cpp \
-    polynomial-friends.cpp
+    polynomial-friends.cpp \
+    expression.cpp
 
 HEADERS += \
     term.h \
     fraction.h \
     constants.h \
-    calculate.h \
-    polynomial.h
+    polynomial.h \
+    expression.h
 
 DISTFILES += \
     test.md
