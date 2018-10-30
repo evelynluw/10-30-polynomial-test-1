@@ -18,12 +18,12 @@ int main(int argc, char *argv[])
 void test_eval() {  //tested
     fraction frac1(5,2), frac2(1,3);
     term term1(frac1, frac2);
-    expression poly1(term1);
+    polynomial poly1(term1);
     cout<<term1(8)<<endl;
 }
 
 void test_cin() {
-    expression poly1;
+    polynomial poly1;
     cout<<"poly1: ";
     cin>>poly1;
     cout<<poly1;

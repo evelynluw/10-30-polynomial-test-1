@@ -1,8 +1,8 @@
-#include "expression.h"
+#include "polynomial.h"
 
-expression firstDerivative(const expression &other)
+polynomial firstDerivative(const polynomial &other)
 {
-    expression temp;
+    polynomial temp;
     term newTerm;
     for(unsigned int i = 0; i < other.poly.size(); ++i)
     {
@@ -16,17 +16,17 @@ expression firstDerivative(const expression &other)
     return temp;
 }
 
-expression nthDerivative(const expression &other, const int n) {
-    expression temp(other);
+polynomial nthDerivative(const polynomial &other, const int n) {
+    polynomial temp(other);
     for(int i = 0; i < n; ++i) {
         temp = firstDerivative(temp);
     }
     return temp;
 }
 
-expression operator+(const expression &x, const expression &y)
+polynomial operator+(const polynomial &x, const polynomial &y)
 {
-    expression temp;
+    polynomial temp;
     for(unsigned int i = 0; i < x.poly.size(); ++i)
         temp.poly.push_back(x[i]);
     for(unsigned int i = 0; i < y.poly.size(); ++i)
@@ -39,22 +39,22 @@ expression operator+(const expression &x, const expression &y)
 }
 
 
-expression operator-(const expression &x, const expression &y)
+polynomial operator-(const polynomial &x, const polynomial &y)
 {
-    expression _y(y);
+    polynomial _y(y);
     for(unsigned int i = 0; i < _y.poly.size(); ++i) {
         _y.poly[i].setTerm(fraction(0)-_y.poly[i].getCoeff(),
                            _y.poly[i].getPower(),
                            _y.poly[i].getVar());
     }
-    expression temp = x + _y;
+    polynomial temp = x + _y;
     return temp;
 }
 
 
-expression operator*(const expression &x, const expression &y)
+polynomial operator*(const polynomial &x, const polynomial &y)
 {
-    expression temp;
+    polynomial temp;
     for(unsigned int i = 0; i < x.poly.size(); ++i)
         for(unsigned int j = 0; j < y.poly.size(); ++j)
             temp.poly.push_back(x[i] * y[j]);
@@ -64,15 +64,15 @@ expression operator*(const expression &x, const expression &y)
 }
 
 
-expression operator/(const expression &x, const expression &y)
+polynomial operator/(const polynomial &x, const polynomial &y)
 {
     //do this with synthetic division.... hint...
-    //Also, does expression need to be changed to support division??
+    //Also, does polynomial need to be changed to support division??
     return x;
 }
 
 
-std::ostream& operator<<(std::ostream& out, const expression &other) //TESTED
+std::ostream& operator<<(std::ostream& out, const polynomial &other) //TESTED
 {
     for(unsigned int i = 0; i < other.poly.size(); ++i){
         if(i!=0){
@@ -91,7 +91,7 @@ std::ostream& operator<<(std::ostream& out, const expression &other) //TESTED
 }
 
 
-std::istream& operator>>(std::istream& in, expression &p)
+std::istream& operator>>(std::istream& in, polynomial &p)
 {
     //still have problems with line endings
     //plan to take the line as a string
@@ -101,7 +101,7 @@ std::istream& operator>>(std::istream& in, expression &p)
     term _term;
     std::string line;
     std::getline(in,line);
-//    p = expression(line)
+//    p = polynomial(line)
     size_t pos=0, prev = 1;
     while((pos = line.find(' ')) != std::string::npos) {
         line.erase(pos,1);

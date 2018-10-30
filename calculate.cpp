@@ -261,7 +261,7 @@ void calculate::record(string filename) {
 }
 
 void calculate::newton(char funcName, fraction initGuess) {
-    expression exp1(exps[index(funcName)]),
+    polynomial exp1(exps[index(funcName)]),
             exp2 = firstDerivative(exp1);
     double x = initGuess.evaluate();
     double epsilon = 0.1;

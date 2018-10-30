@@ -1,41 +1,41 @@
-#include "expression.h"
+#include "polynomial.h"
 
 //PUBLIC
 //CTORS
 
-expression::expression()
+polynomial::polynomial()
 {
 
 }
 
-expression::~expression()
+polynomial::~polynomial()
 {
     poly.clear();
 }
 
-expression::expression(const expression &other)
+polynomial::polynomial(const polynomial &other)
 {
     copy(other);
 }
 
-expression::expression(const term &other)
+polynomial::polynomial(const term &other)
 {
     poly.push_back(other);
 }
 
-expression::expression(std::string expString) { //TESTED
+polynomial::polynomial(std::string expString) { //TESTED
     setExp(expString);
 }
 
 //PUBLIC FUNCTIONS
 
-void expression::setExp(std::string expString) { //TESTED
+void polynomial::setExp(std::string expString) { //TESTED
     std::stringstream ss;
     ss<<expString;
     ss>>*this;
 }
 
-fraction expression::evaluate(const fraction &other) { //TESTED
+fraction polynomial::evaluate(const fraction &other) { //TESTED
     fraction temp(0);
     for(std::vector<term>::iterator it = poly.begin(); it != poly.end(); ++it) {
         temp += it->evaluate(other);
@@ -43,7 +43,7 @@ fraction expression::evaluate(const fraction &other) { //TESTED
     return temp;
 }
 
-double expression::evaluate(const double value) {
+double polynomial::evaluate(const double value) {
     double temp = 0;
     for(std::vector<term>::iterator it = poly.begin(); it != poly.end(); ++it) {
         temp += it->evaluate(value);
@@ -51,11 +51,11 @@ double expression::evaluate(const double value) {
     return temp;
 }
 
-void expression::addterm(const term &term_arg) { //TESTED
+void polynomial::addterm(const term &term_arg) { //TESTED
     poly.push_back(term_arg);
 }
 
-std::string expression::polyString() {
+std::string polynomial::polyString() {
     std::stringstream ss;
     std::string temp;
     ss<<*this;
@@ -65,7 +65,7 @@ std::string expression::polyString() {
 
 
 //OPERATORS
-expression& expression::operator=(const expression &other)
+polynomial& polynomial::operator=(const polynomial &other)
 {
     if(this != &other)
     {
@@ -75,35 +75,35 @@ expression& expression::operator=(const expression &other)
     return *this;
 }
 
-expression& expression::operator+=(const expression &other)
+polynomial& polynomial::operator+=(const polynomial &other)
 {
-    expression ans = *this + other;
+    polynomial ans = *this + other;
     *this = ans;
     return *this;
 }
 
-expression& expression::operator-=(const expression &other)
+polynomial& polynomial::operator-=(const polynomial &other)
 {
-    expression ans = *this - other;
+    polynomial ans = *this - other;
     *this = ans;
     return *this;
 }
 
-expression& expression::operator*=(const expression &other)
+polynomial& polynomial::operator*=(const polynomial &other)
 {
-    expression ans = *this * other;
+    polynomial ans = *this * other;
     *this = ans;
     return *this;
 }
 
-expression& expression::operator/=(const expression &other)
+polynomial& polynomial::operator/=(const polynomial &other)
 {
-    expression ans = *this / other;
+    polynomial ans = *this / other;
     *this = ans;
     return *this;
 }
 
-fraction expression::operator()(const fraction &other) //TESTED
+fraction polynomial::operator()(const fraction &other) //TESTED
 {
 //    fraction result;
 //    for(unsigned int i = 0; i < poly.size(); ++i)
@@ -112,30 +112,30 @@ fraction expression::operator()(const fraction &other) //TESTED
 }
 
 
-term expression::operator[](unsigned int index) const
+term polynomial::operator[](unsigned int index) const
 {
     return poly[index];
 }
 
 /*
- * Suppose that there is a expression named f.
+ * Suppose that there is a polynomial named f.
  * then the operator below will allow:
  * f[3] = term(3,2);
- * Meaning, we can index the expression like and array and
+ * Meaning, we can index the polynomial like and array and
  * assign new values to each term.
  */
-term& expression::operator[](unsigned int index)
+term& polynomial::operator[](unsigned int index)
 {
     return poly[index];
 }
 
-void expression::copy(const expression &other)
+void polynomial::copy(const polynomial &other)
 {
     for(unsigned int i = 0; i < other.poly.size(); ++i)
         poly.push_back(other[i]);
 }
 
-void expression::sort()
+void polynomial::sort()
 {
     term temp;
     for(unsigned int i = 0; i < poly.size(); ++i)
@@ -148,7 +148,7 @@ void expression::sort()
             }
 }
 
-void expression::combineTerms()
+void polynomial::combineTerms()
 {
     for(unsigned int i = 0; i < poly.size()-1; ++i)
         if(poly[i].getPower() == poly[i+1].getPower())

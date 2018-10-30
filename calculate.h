@@ -1,7 +1,7 @@
 #ifndef CALCULATE_H
 #define CALCULATE_H
 
-#include "expression.h"
+#include "polynomial.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -21,7 +21,7 @@ public:
 
 private:
     //VARIABLES
-    vector<expression> exps = vector<expression>(26, expression("0")); //TESTED, init vector
+    vector<polynomial> exps = vector<polynomial>(26, polynomial("0")); //TESTED, init vector
     const string commandArr[6] = {"LET", "EVAL", "PRINT", "LOAD", "SAVE", "NEWTON"}; //TESTED, init array
 
     //MAIN FUNCTIONS
