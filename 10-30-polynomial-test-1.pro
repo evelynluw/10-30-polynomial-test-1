@@ -7,15 +7,13 @@ SOURCES += \
         main.cpp \
     term-friends.cpp \
     term.cpp \
-    polynomial-friends.cpp \
-    polynomial.cpp \
     fraction-friends.cpp \
     fraction.cpp \
-    expression.cpp
+    expression.cpp \
+    expression-friends.cpp
 
 HEADERS += \
     term.h \
-    polynomial.h \
     fraction.h \
     constants.h \
     expression.h
