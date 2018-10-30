@@ -11,17 +11,44 @@ calculate::calculate()
 
 //..MAIN PROGRAM
 
-void calculate::run() {
-
+void calculate::run(int argc, char *argv[]) {
+    bool record = false;
+    switch (argc) {
+    case 0:
+        break;
+    case 1: {
+        string filename(argv[0]);
+        load(filename);
+        break;
+    }
+    case 2: {
+        if(toUpper(string(argv[0]))=="EXECUTE") {
+            execute(string(argv[1]));
+        }
+        if(toUpper(string(argv[0]))=="RECORD") {
+            record = true;
+        }
+        break;
+    }
+    default:
+        exit(1);
+        //throw error
+        break;
+    }
+    while(1) {
+        prompt();
+        string line = getCommand(cin),
+                filename = argv[1];
+        if(record)
+            saveStringToFile(filename, line);
+        execCommand(line);
+    }
 }
 
 //..TESTING
 void calculate::test() {
-    while(1){
-        prompt();
-        execCommand(getCommand(cin));
-    }
-
+    saveStringToFile("test.txt", "the fist line");
+    saveStringToFile("test.txt", "the second line", true);
 }
 
 //PRIVATE
@@ -51,7 +78,7 @@ void calculate::execCommand(string command) {
      */
     string noSpaceCommand = delSpace(command),
             upperCommand = toUpper(noSpaceCommand);
-    for(unsigned int i = 0; i < 5; ++i) {
+    for(unsigned int i = 0; i < 6; ++i) {
         size_t pos=0;
         if((pos = upperCommand.find(commandArr[i])) != string::npos) {
             string exp = noSpaceCommand.substr(pos+commandArr[i].length()) ;
@@ -85,6 +112,12 @@ void calculate::execCommand(string command) {
             {
                 save(exp);
                 break;
+            }
+            case 5: //NEWTON, exp = "F10.5"
+            {
+                char funcName = exp[0];
+                fraction initGuess(exp.substr(1));
+                newton(funcName, initGuess);
             }
             default:
                 break;
@@ -121,12 +154,58 @@ void calculate::print(char funcName) { //TESTED
     cout<<temp<<endl;
 }
 
-void calculate::load(string filename) {
-
+void calculate::load(string& filename) {
+    ifstream ifs;
+    string line;
+    if(filename.empty()) {
+        cout<<"invalid filename"<<endl;
+        return;
+        //throw error
+    }
+    if(filename.find(".exp")>filename.size())
+        filename+=".exp";
+    ifs.open(filename);
+    if(ifs.fail()) {
+        cout<<"file does not exist"<<endl;
+        return;
+        //throw error
+    }
+    cout<<"loaded "<<filename<<endl;
+    while(!ifs.eof())
+    {
+        stringstream ss;
+        getline(ifs, line);
+        if(!line.empty()){
+            ss<<"LET "<<line;
+            getline(ss, line);
+            cout<<"##line: "<<line<<endl;
+            execCommand(line);
+        }
+    }
 }
 
-void calculate::save(string filename) {
-
+void calculate::save(string& filename) {
+    ifstream ifs;
+    ofstream ofs;
+    string line;
+    if(filename.empty()) {
+        cout<<"invalid filename"<<endl;
+        return;
+        //throw error
+    }
+    if(filename.find(".exp")>filename.size())
+        filename+=".exp";
+    ifs.open(filename);
+    if(!ifs.fail()) {
+        cout<<"file already exists, overwrite?"<<endl;
+        getline(cin, line);
+        if(toupper(line[0])!='Y')
+            return;
+    }
+    ofs.open(filename);
+    for(char i = 'A'; i <= 'Z'; ++i) {
+        ofs<<i<<" = "<<exps[index(i)]<<endl;
+    }
 }
 
 void calculate::algebra(string algebraExp) { //TESTED
@@ -173,6 +252,28 @@ void calculate::algebra(string algebraExp) { //TESTED
 
 }
 
+void calculate::execute(string filename) {
+
+}
+
+void calculate::record(string filename) {
+
+}
+
+void calculate::newton(char funcName, fraction initGuess) {
+    expression exp1(exps[index(funcName)]),
+            exp2 = firstDerivative(exp1);
+    double x = initGuess.evaluate();
+    double epsilon = 0.1;
+    double h = exp1.evaluate(x) / exp2.evaluate(x);
+    while(abs(h)>= epsilon) {
+        h = exp1.evaluate(x) / exp2.evaluate(x);
+        x = x - h;
+    }
+    cout<<"root of "<<funcName<<" is "<<x<<endl;
+}
+
+
 //..ADDITIONAL FUNCTIONS
 
 string calculate::toUpper(string str) { //TESTED
@@ -185,13 +286,29 @@ string calculate::toUpper(string str) { //TESTED
 
 string calculate::delSpace(string str) { //TESTED
     string temp=str;
-    size_t pos=temp.find(" ");
-    do{
+    size_t pos=0;
+    while((pos=temp.find(" ", pos+1))!=string::npos) {
         temp.erase(pos,1);
-    } while((pos=temp.find(" ", pos+1))!=string::npos);
+    }
     return temp;
 }
 
 int calculate::index(char funcName) { //TESTED
     return toupper(funcName)-65;
 }
+
+void calculate::saveStringToFile(string filename, string line, bool append) {
+    ofstream ofs;
+    if(append)
+        ofs.open(filename, ios_base::app);
+    else
+        ofs.open(filename);
+    ofs<<line<<endl;
+    //check if there is line endings
+}
+
+void calculate::askString(string prompt, string& theString) {
+    cout<<prompt;
+    cin>>theString;
+}
+

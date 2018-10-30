@@ -43,6 +43,14 @@ fraction expression::evaluate(const fraction &other) { //TESTED
     return temp;
 }
 
+double expression::evaluate(const double value) {
+    double temp = 0;
+    for(std::vector<term>::iterator it = poly.begin(); it != poly.end(); ++it) {
+        temp += it->evaluate(value);
+    }
+    return temp;
+}
+
 void expression::addterm(const term &term_arg) { //TESTED
     poly.push_back(term_arg);
 }

@@ -80,6 +80,11 @@ fraction term::evaluate(const fraction& other) //TESTED
     return temp;
 }
 
+double term::evaluate(const double value) {
+    double temp = coeff.evaluate()*pow(value, power.evaluate());
+    return temp;
+}
+
 fraction term::operator()(const fraction& other) //TESTED
 {
    return evaluate(other);

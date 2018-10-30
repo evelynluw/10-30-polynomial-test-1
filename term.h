@@ -25,6 +25,7 @@ class term
         void setTerm(const fraction &c, const fraction p = 0, char v = 'x');
         void setTerm(std::string termString); //TESTED
         fraction evaluate(const fraction& other);
+        double evaluate(const double value);
         fraction operator()(const fraction& other);
         //y = x(3/4); where y and x are terms
 

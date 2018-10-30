@@ -20,6 +20,7 @@ class expression  //this is pavan testing out git
         //Public Functions
         void setExp(std::string expString); //TESTED
         fraction evaluate(const fraction &other); //TESTED
+        double evaluate(const double value);
         void addterm(const term &term_arg); //TESTED
         std::string polyString();
 

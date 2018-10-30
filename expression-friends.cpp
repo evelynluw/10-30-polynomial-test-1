@@ -12,6 +12,7 @@ expression firstDerivative(const expression &other)
             );
         temp.poly.push_back(newTerm);
     }
+    temp.combineTerms();
     return temp;
 }
 
@@ -101,21 +102,26 @@ std::istream& operator>>(std::istream& in, expression &p)
     std::string line;
     std::getline(in,line);
 //    p = expression(line)
-    size_t pos=0;
+    size_t pos=0, prev = 1;
     while((pos = line.find(' ')) != std::string::npos) {
         line.erase(pos,1);
     }
     line+="+";
-    while((pos = line.find_first_of("+-",1)) != std::string::npos) {
-        std::string sterm = line.substr(0, pos);
-//        std::cout<<sterm<<std::endl;
-        std::stringstream ssterm;
-        ssterm<<sterm;
-        ssterm>>_term;
-        p.poly.push_back(_term);
-        line.erase(0, pos);
-        if(line.length()==1)
-            line.erase(0,1);
+    while((pos = line.find_first_of("+-",prev)) != std::string::npos) {
+        if(line[pos-1]=='^')
+            prev++;
+        else {
+            prev = 1;
+            std::string sterm = line.substr(0, pos);
+    //        std::cout<<sterm<<std::endl;
+            std::stringstream ssterm;
+            ssterm<<sterm;
+            ssterm>>_term;
+            p.poly.push_back(_term);
+            line.erase(0, pos);
+            if(line.length()==1)
+                line.erase(0,1);
+        }
     }
     p.sort();
     p.combineTerms();

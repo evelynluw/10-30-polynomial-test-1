@@ -8,9 +8,10 @@ void test_eval();
 void test_cin();
 void test_calculate();
 
-int main()
+int main(int argc, char *argv[])
 {
-    test_calculate();
+    calculate program;
+    program.run(argc, argv);
     return 0;
 }
 
@@ -49,8 +50,7 @@ void test_cin() {
 }
 
 void test_calculate(){
-    calculate program;
-    program.test();
+
 }
 
 
