@@ -23,7 +23,18 @@ expression::expression(const term &other)
     poly.push_back(other);
 }
 
+expression::expression(std::string expString) { //TESTED
+    setExp(expString);
+}
+
 //PUBLIC FUNCTIONS
+
+void expression::setExp(std::string expString) { //TESTED
+    std::stringstream ss;
+    ss<<expString;
+    ss>>*this;
+}
+
 fraction expression::evaluate(const fraction &other) { //TESTED
     fraction temp(0);
     for(std::vector<term>::iterator it = poly.begin(); it != poly.end(); ++it) {
@@ -121,7 +132,7 @@ void expression::sort()
     term temp;
     for(unsigned int i = 0; i < poly.size(); ++i)
         for(unsigned int j = 0; j < poly.size(); ++j)
-            if(poly[i] < poly[j])
+            if(poly[i] > poly[j])
             {
                 temp = poly[i];
                 poly[i] = poly[j];

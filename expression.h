@@ -15,10 +15,12 @@ class expression  //this is pavan testing out git
         ~expression();
         expression(const term &other);
         expression(const expression &other);
+        expression(std::string expString); //TESTED
 
         //Public Functions
-        fraction evaluate(const fraction &other);
-        void addterm(const term &term_arg);
+        void setExp(std::string expString); //TESTED
+        fraction evaluate(const fraction &other); //TESTED
+        void addterm(const term &term_arg); //TESTED
         std::string polyString();
 
         //Operators

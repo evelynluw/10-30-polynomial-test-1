@@ -69,8 +69,9 @@ std::ostream& operator<<(std::ostream& out, const expression &other) //TESTED
 {
     for(unsigned int i = 0; i < other.poly.size(); ++i){
         if(i!=0){
-            if(other[i].getCoeff()<0)
-                out<<'-';
+            if(other[i].getCoeff()<0){
+                //out<<'-';
+            }
             else
                 out<<'+';
         }
@@ -97,7 +98,7 @@ std::istream& operator>>(std::istream& in, expression &p)
     line+="+";
     while((pos = line.find_first_of("+-",1)) != std::string::npos) {
         std::string sterm = line.substr(0, pos);
-        std::cout<<sterm<<std::endl;
+//        std::cout<<sterm<<std::endl;
         std::stringstream ssterm;
         ssterm<<sterm;
         ssterm>>_term;

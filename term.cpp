@@ -11,11 +11,17 @@ term::term(const fraction &c, const fraction& p, char v)
     setTerm(c, p, v);
 }
 
+term::term(std::string termString) {
+    setTerm(termString);
+}
+
 term::~term()
 {
     coeff = power = 0;
     var = '\0';
 }
+
+
 
 term::term(const term& other)
 {
@@ -51,6 +57,11 @@ void term::setTerm(const fraction &c, const fraction p, char v)
     var = v;
 }
 
+void term::setTerm(std::string termString) { //TESTED
+    std::stringstream ss;
+    ss<<termString;
+    ss>>*this;
+}
 
 term& term::operator*=(const term& other)
 {

@@ -73,8 +73,9 @@ std::ostream& operator<<(std::ostream& out, const term& t) //TESTED
 {
     if(t.coeff != 1)
         out<<t.coeff;
-    out<<t.var;
-    if(t.power != 1)
+    if(t.power != 0)
+        out<<t.var;
+    if(t.power != 1 && t.power != 0)
         out<<'^'<<t.power;
     return out;
 }
@@ -90,19 +91,20 @@ std::istream& operator>>(std::istream& in, term& t) //TESTED
 
     //assuming there will only be 3 types of
     //inputs: 3/2x^2, x^5, 5
-    fraction coeff(1), power(1);
+    fraction coeff(1), power(0);
 //    std::string term_line;
 //    std::getline(in, term_line);
 //    std::cout<<term_line<<std::endl;
 
     char var = 'x', junk;
-    std::cout<<"##condition:"<<(isdigit(in.peek()) || in.peek()=='+' || in.peek()=='-')<<std::endl;
-    std::cout<<"##peek:"<<in.peek()<<std::endl;
+//    std::cout<<"##condition:"<<(isdigit(in.peek()) || in.peek()=='+' || in.peek()=='-')<<std::endl;
+//    std::cout<<"##peek:"<<in.peek()<<std::endl;
     if(isdigit(in.peek()) || in.peek()=='+' ||  in.peek()=='-') { //[2]x^2
         in>>coeff;
     }
     if(isalpha(in.peek())) { //[x]^2
         in>>var;
+        power.setValue(1);
     }
     if(in.peek()=='^') { //x[^]2
         in>>junk>>power;

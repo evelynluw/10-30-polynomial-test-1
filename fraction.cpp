@@ -14,6 +14,9 @@ fraction::fraction(int n, int d)
    setValue(n,d);
 }
 
+fraction::fraction(std::string fracString) { //TESTED
+    setValue(fracString);
+}
 
 fraction::~fraction()
 {
@@ -97,6 +100,12 @@ void fraction::setValue(int n, int d) //mutator function
     num = n;
     denom = d;
     reduce();
+}
+
+void fraction::setValue(std::string fracString) { //TESTED
+    std::stringstream ss;
+    ss<<fracString;
+    ss>>*this;
 }
 
 void fraction::display()

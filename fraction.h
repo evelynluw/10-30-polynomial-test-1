@@ -4,6 +4,7 @@
 #include <fstream>
 #include <cmath>
 #include <sstream>
+#include <string>
 #include "constants.h"
 
 class fraction
@@ -19,6 +20,7 @@ class fraction
          * and a denominator to the new fraction
          */
         fraction(int n, int d = 1);
+        fraction(std::string fracString); //TESTED
         /*
          * How do you destroy a fraction?
          * By the destructor!
@@ -104,6 +106,7 @@ class fraction
         int getNum(); //accessor function for numerator
         int getDenom();//accessor function for denominator
         void setValue(int n, int d = 1); //mutator function
+        void setValue(std::string fracString); //TESTED
         void display();
         void getInput();
         void reduce();
