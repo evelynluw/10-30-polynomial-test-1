@@ -86,16 +86,26 @@ std::istream& operator>>(std::istream& in, polynomial &p)
     //plan to take the line as a string
     //and parse the string as a couple of
     //terms...
-    term temp;
+    term _term;
+    std::string line;
+    std::getline(in,line);
 //    p = polynomial(line)
-    while(in.peek()!='\n'){
-        //GETLINE
-        //PARSE FOR EMPTY SPACES
-        //
-        in>>temp;
-        p.poly.push_back(temp);
+    size_t pos=0;
+    while((pos = line.find(' ')) != std::string::npos) {
+        line.erase(pos,1);
     }
-
+    line+="+";
+    while((pos = line.find_first_of("+-",1)) != std::string::npos) {
+        std::string sterm = line.substr(0, pos);
+        std::cout<<sterm<<std::endl;
+        std::stringstream ssterm;
+        ssterm<<sterm;
+        ssterm>>_term;
+        p.poly.push_back(_term);
+        line.erase(0, pos);
+        if(line.length()==1)
+            line.erase(0,1);
+    }
     p.sort();
     p.combineTerms();
     return in;

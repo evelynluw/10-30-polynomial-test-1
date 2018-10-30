@@ -21,7 +21,7 @@ void test_eval() {  //tested
 }
 
 void test_cin() {
-    polynomial poly1, poly2;
+    polynomial poly1;
     cout<<"poly1: ";
     cin>>poly1;
     cout<<poly1;

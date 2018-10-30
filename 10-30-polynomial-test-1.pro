@@ -10,10 +10,12 @@ SOURCES += \
     polynomial-friends.cpp \
     polynomial.cpp \
     fraction-friends.cpp \
-    fraction.cpp
+    fraction.cpp \
+    expression.cpp
 
 HEADERS += \
     term.h \
     polynomial.h \
     fraction.h \
-    constants.h
+    constants.h \
+    expression.h

@@ -1,4 +1,4 @@
-#include "term.h"
+﻿#include "term.h"
 
 //term operator+(const term &x, const term &y)
 //{
@@ -91,8 +91,14 @@ std::istream& operator>>(std::istream& in, term& t) //TESTED
     //assuming there will only be 3 types of
     //inputs: 3/2x^2, x^5, 5
     fraction coeff(1), power(1);
-    char var, junk;
-    if(isdigit(in.peek())) { //[2]x^2
+//    std::string term_line;
+//    std::getline(in, term_line);
+//    std::cout<<term_line<<std::endl;
+
+    char var = 'x', junk;
+    std::cout<<"##condition:"<<(isdigit(in.peek()) || in.peek()=='+' || in.peek()=='-')<<std::endl;
+    std::cout<<"##peek:"<<in.peek()<<std::endl;
+    if(isdigit(in.peek()) || in.peek()=='+' ||  in.peek()=='-') { //[2]x^2
         in>>coeff;
     }
     if(isalpha(in.peek())) { //[x]^2
