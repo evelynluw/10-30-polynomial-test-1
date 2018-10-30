@@ -21,7 +21,7 @@ public:
 
 private:
     //VARIABLES
-    vector<expression> exps = vector<expression>(26); //TESTED, init vector
+    vector<expression> exps = vector<expression>(26, expression("0")); //TESTED, init vector
     const string commandArr[5] = {"LET", "EVAL", "PRINT", "LOAD", "SAVE"}; //TESTED, init array
 
     //MAIN FUNCTIONS
@@ -33,7 +33,7 @@ private:
     void print(char funcName);
     void load(string filename);
     void save(string filename);
-    void algebra(string algebraExp);
+    void algebra(string algebraExp); //TESTED
 
     //ADDITIONAL FUNCTIONS
     string toUpper(string str); //TESTED

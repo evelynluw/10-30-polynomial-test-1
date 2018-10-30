@@ -17,7 +17,7 @@ void calculate::run() {
 
 //..TESTING
 void calculate::test() {
-    execCommand("F = G + H");
+    execCommand("F = G''''");
 
 }
 
@@ -111,7 +111,45 @@ void calculate::save(string filename) {
 
 }
 
-void calculate::algebra(string algebraExp) {
+void calculate::algebra(string algebraExp) { //TESTED
+    /* sample argm:
+     * F=G+H
+     * F=G-H
+     * F=G*H
+     * F=G'
+     * F=G'''
+     */
+    size_t pos;
+    if((pos = algebraExp.find_first_of("+-*"))!= string::npos) {
+        char fn1 = algebraExp[0], //funcName
+                fn2 = algebraExp[2],
+                fn3 =  algebraExp[4];
+        switch (algebraExp[pos]) {
+        case '+': //TESTED
+            exps[index(fn1)] = exps[index(fn2)] + exps[index(fn3)];
+            break;
+        case '-': //TESTED
+            exps[index(fn1)] = exps[index(fn2)] - exps[index(fn3)];
+            break;
+        case '*': //TESTED
+            exps[index(fn1)] = exps[index(fn2)] * exps[index(fn3)];
+            break;
+        default:
+            break;
+        }
+        return;
+    }
+    if((pos = algebraExp.find('\''))!= string::npos) { //TESTED
+        char fn1 = algebraExp[0],
+                fn2 = algebraExp[2];
+        int derCount = 1;
+        while((pos = algebraExp.find('\'', pos+1))!= string::npos)
+            derCount++;
+        exps[index(fn1)]= nthDerivative(exps[index(fn2)], derCount);
+        return;
+    }
+
+    //throw error here
 
 }
 
