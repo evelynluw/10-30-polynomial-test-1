@@ -1,27 +1,28 @@
 #include <iostream>
-#include "expression.h"
 #include <string>
+#include "calculate.h"
 
 using namespace std;
 
 void test_eval();
 void test_cin();
+void test_calculate();
 
 int main()
 {
-    test_cin();
+    test_calculate();
     return 0;
 }
 
 void test_eval() {  //tested
     fraction frac1(5,2), frac2(1,3);
     term term1(frac1, frac2);
-    polynomial poly1(term1);
+    expression poly1(term1);
     cout<<term1(8)<<endl;
 }
 
 void test_cin() {
-    polynomial poly1;
+    expression poly1;
     cout<<"poly1: ";
     cin>>poly1;
     cout<<poly1;
@@ -47,6 +48,10 @@ void test_cin() {
 //    cout<<frac3<<endl;
 }
 
+void test_calculate(){
+    calculate program;
+    program.test();
+}
 
 
 

@@ -10,10 +10,12 @@ SOURCES += \
     fraction-friends.cpp \
     fraction.cpp \
     expression.cpp \
-    expression-friends.cpp
+    expression-friends.cpp \
+    calculate.cpp
 
 HEADERS += \
     term.h \
     fraction.h \
     constants.h \
-    expression.h
+    expression.h \
+    calculate.h
