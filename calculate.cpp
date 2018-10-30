@@ -17,7 +17,10 @@ void calculate::run() {
 
 //..TESTING
 void calculate::test() {
-    execCommand("F = G''''");
+    while(1){
+        prompt();
+        execCommand(getCommand(cin));
+    }
 
 }
 
@@ -26,7 +29,7 @@ void calculate::test() {
 //..MAIN FUNCTIONS
 
 void calculate::prompt() { //TESTED
-    cout<<"INPUT: "<<endl;
+    cout<<"INPUT: ";
 }
 
 string calculate::getCommand(istream& in) { //TESTED: cout<<getCommand(cin)<<endl;
@@ -54,7 +57,7 @@ void calculate::execCommand(string command) {
             case 0: //LET, exp = "F=2X+4", TESTED
             {
                 char funcName = exp[0];
-                exp.erase(0,2);
+                exp.erase(0,2); //"2X+4"
                 let(funcName, exp);
                 break;
             }
@@ -62,7 +65,7 @@ void calculate::execCommand(string command) {
             {
                 char funcName = exp[0];
                 fraction value(exp.substr(2,exp.length()-1-2));
-                eval(funcName, value);
+                eval(funcName, value); //value = 1/4
                 break;
             }
             case 2: //PRINT, exp = "F", TESTED
@@ -91,16 +94,29 @@ void calculate::execCommand(string command) {
     algebra(noSpaceCommand); //"F=G+H", TESTED
 }
 
-void calculate::let(char funcName, string exp) {
-
+void calculate::let(char funcName, string exp) { //NOT FULLY WORKING - setExp...
+    /* sample argm:
+     * 2X+4
+     */
+    exps[index(funcName)].setExp(exp);
+    print(funcName);
 }
 
-void calculate::eval(char funcName, fraction value) {
-
+void calculate::eval(char funcName, fraction value) { //PARTIALLY TESTED
+    stringstream ss;
+    string temp;
+    ss<<funcName<<'('<<value<<") = "
+     <<exps[index(funcName)].evaluate(value);
+    getline(ss,temp);
+    cout<<temp<<endl;
 }
 
-void calculate::print(char funcName) {
-
+void calculate::print(char funcName) { //TESTED
+    stringstream ss;
+    string temp;
+    ss<<funcName<<" = "<<exps[index(funcName)];
+    getline(ss,temp);
+    cout<<temp<<endl;
 }
 
 void calculate::load(string filename) {

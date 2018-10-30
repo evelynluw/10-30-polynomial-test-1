@@ -19,3 +19,6 @@ HEADERS += \
     constants.h \
     expression.h \
     calculate.h
+
+DISTFILES += \
+    test.md
