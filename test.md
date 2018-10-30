@@ -50,8 +50,8 @@ INPUT:
 ```
 Problems: 
 
-- [ ] `algebra`: needs auto printing result
-- [ ] `expression::combineterms` : needs to auto delete when `coeff == 0`
-- [ ] `expression`: `-` operator: not working
-- [ ] `expression` string `setExp`: why is it being added to the expression?  should overwrite
-- [ ] `getCommand`: terminate when cin has only `\n`
+- [-] `algebra`: needs auto printing result
+- [-] `expression::combineterms` : needs to auto delete when `coeff == 0`
+- [-] `expression`: `-` operator: not working
+- [-] `expression` string `setExp`: why is it being added to the expression?  should overwrite
+- [-] `getCommand`: terminate when cin has only `\n`

@@ -40,7 +40,13 @@ expression operator+(const expression &x, const expression &y)
 
 expression operator-(const expression &x, const expression &y)
 {
-    expression temp = x + y;
+    expression _y(y);
+    for(unsigned int i = 0; i < _y.poly.size(); ++i) {
+        _y.poly[i].setTerm(fraction(0)-_y.poly[i].getCoeff(),
+                           _y.poly[i].getPower(),
+                           _y.poly[i].getVar());
+    }
+    expression temp = x + _y;
     return temp;
 }
 
@@ -69,13 +75,16 @@ std::ostream& operator<<(std::ostream& out, const expression &other) //TESTED
 {
     for(unsigned int i = 0; i < other.poly.size(); ++i){
         if(i!=0){
-            if(other[i].getCoeff()<0){
-                //out<<'-';
+            if(other[i].getCoeff()<0) {
+                out<<" - "<<term(fraction(0) - other[i].getCoeff(),
+                                 other[i].getPower(),
+                                 other[i].getVar());
             }
             else
-                out<<'+';
+                out<<" + "<<other[i];
         }
-        out<<other[i];
+        if(i==0)
+            out<<other[i];
     }
     return out;
 }
@@ -87,6 +96,7 @@ std::istream& operator>>(std::istream& in, expression &p)
     //plan to take the line as a string
     //and parse the string as a couple of
     //terms...
+    p.poly.clear();
     term _term;
     std::string line;
     std::getline(in,line);

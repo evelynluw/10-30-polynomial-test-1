@@ -150,6 +150,12 @@ void expression::combineTerms()
                             poly[i].getPower());
             poly.erase(poly.begin() + i + 1);
         }
+    for(unsigned int i = 0; i < poly.size(); ++i)
+        if(poly[i].getCoeff() == fraction(0)) {
+            poly.erase(poly.begin()+i);
+        }
+    if(poly.size() == 0)
+        poly.push_back(term(0));
 }
 /*
  *   *(x + 2) is the same as x[2] in an array!!!

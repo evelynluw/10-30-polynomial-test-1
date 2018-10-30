@@ -33,6 +33,8 @@ void calculate::prompt() { //TESTED
 }
 
 string calculate::getCommand(istream& in) { //TESTED: cout<<getCommand(cin)<<endl;
+    if(in.peek()=='\n')
+        exit(1);
     string temp;
     getline(in, temp);
     return temp;
@@ -153,6 +155,7 @@ void calculate::algebra(string algebraExp) { //TESTED
         default:
             break;
         }
+        print(fn1);
         return;
     }
     if((pos = algebraExp.find('\''))!= string::npos) { //TESTED
@@ -162,6 +165,7 @@ void calculate::algebra(string algebraExp) { //TESTED
         while((pos = algebraExp.find('\'', pos+1))!= string::npos)
             derCount++;
         exps[index(fn1)]= nthDerivative(exps[index(fn2)], derCount);
+        print(fn1);
         return;
     }
 
