@@ -17,7 +17,8 @@ void calculate::run() {
 
 //..TESTING
 void calculate::test() {
-    cout<<getCommand(cin)<<endl;
+    execCommand("F = G + H");
+
 }
 
 //PRIVATE
@@ -35,21 +36,59 @@ string calculate::getCommand(istream& in) { //TESTED: cout<<getCommand(cin)<<end
 }
 
 void calculate::execCommand(string command) {
-    string _command = toupper(delSpace(command));
+    /* sample argm:
+     * LET F = 2X + 4
+     * EVAL F(1/4)
+     * PRINT F
+     * LOAD filename.exp
+     * SAVE filename.exp
+     * F = G + H
+     */
+    string noSpaceCommand = delSpace(command),
+            upperCommand = toUpper(noSpaceCommand);
     for(unsigned int i = 0; i < 5; ++i) {
         size_t pos=0;
-        if((pos = _command.find(commandArr[i])) != string::npos) {
-            string exp = _command.substr(pos+commandArr[i].length()) ;
+        if((pos = upperCommand.find(commandArr[i])) != string::npos) {
+            string exp = noSpaceCommand.substr(pos+commandArr[i].length()) ;
             switch (i) {
-            case 0: //LET
+            case 0: //LET, exp = "F=2X+4", TESTED
+            {
                 char funcName = exp[0];
-
+                exp.erase(0,2);
+                let(funcName, exp);
                 break;
+            }
+            case 1: //EVAL, exp = "F(1/4)", TESTED
+            {
+                char funcName = exp[0];
+                fraction value(exp.substr(2,exp.length()-1-2));
+                eval(funcName, value);
+                break;
+            }
+            case 2: //PRINT, exp = "F", TESTED
+            {
+                char funcName = exp[0];
+                print(funcName);
+                break;
+            }
+            case 3: //LOAD, exp = "FILENAME.EXP", TESTED
+            {
+                load(exp);
+                break;
+            }
+            case 4: //SAVE, exp = "FILENAME.EXP", TESTED
+            {
+                save(exp);
+                break;
+            }
             default:
                 break;
             }
+            return;
         }
     }
+
+    algebra(noSpaceCommand); //"F=G+H", TESTED
 }
 
 void calculate::let(char funcName, string exp) {
