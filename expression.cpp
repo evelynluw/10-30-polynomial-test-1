@@ -14,34 +14,40 @@ expression::expression()
 void expression::run(int argc, char *argv[]) {
     bool record = false;
     switch (argc) {
-    case 0:
+    case 1:
         break;
-    case 1: {
-        string filename(argv[0]);
-        load(filename);
+    case 2: { //TESTED
+        if(string(argv[1]) == "/h" ||
+                string(argv[1]) == "/?") {
+            help();
+        } else {
+            string filename(argv[1]);
+            load(filename);
+        }
         break;
     }
-    case 2: {
-        if(toUpper(string(argv[0]))=="EXECUTE") {
-            execute(string(argv[1]));
+    case 3: {
+        if(toUpper(string(argv[1]))=="EXECUTE") { //TESTED
+            execute(string(argv[2]));
         }
-        if(toUpper(string(argv[0]))=="RECORD") {
+        if(toUpper(string(argv[1]))=="RECORD") {
             record = true;
+            cout<<"recording to "<<argv[2]<<endl;
         }
         break;
     }
     default:
+        cout<<"argument error"<<endl;
         exit(1);
         //throw error
         break;
     }
     while(1) {
         prompt();
-        string line = getCommand(cin),
-                filename = argv[1];
-        if(record)
-            saveStringToFile(filename, line);
+        string line = getCommand(cin);
         execCommand(line);
+        if(record)
+            recordToFile(argv[2], line);
     }
 }
 
@@ -59,6 +65,24 @@ void expression::prompt() { //TESTED
     cout<<"INPUT: ";
 }
 
+void expression::help() {
+    cout<<"Examples for INPUT: \n"
+       << "LET F = 2X + 4 \n"
+       << "EVAL F(1/4) \n"
+       << "PRINT F \n"
+       << "LOAD filename.exp \n"
+       << "SAVE filename.exp \n"
+       << "NEWTON F 5 \n"
+       << "F = G + H \n"
+       << "\n"
+       << "Examples for command line arguments: \n"
+       << "test1.exp \n"
+       << "EXECUTE script1.spt \n"
+       << "RECORD record1.spt \n"
+       << "/h \n"
+       << endl;
+}
+
 string expression::getCommand(istream& in) { //TESTED: cout<<getCommand(cin)<<endl;
     if(in.peek()=='\n')
         exit(1);
@@ -74,6 +98,7 @@ void expression::execCommand(string command) {
      * PRINT F
      * LOAD filename.exp
      * SAVE filename.exp
+     * NEWTON F 5
      * F = G + H
      */
     string noSpaceCommand = delSpace(command),
@@ -178,7 +203,7 @@ void expression::load(string& filename) {
         if(!line.empty()){
             ss<<"LET "<<line;
             getline(ss, line);
-            cout<<"##line: "<<line<<endl;
+//            cout<<"##line: "<<line<<endl;
             execCommand(line);
         }
     }
@@ -206,6 +231,7 @@ void expression::save(string& filename) {
     for(char i = 'A'; i <= 'Z'; ++i) {
         ofs<<i<<" = "<<exps[index(i)]<<endl;
     }
+    cout<<"saved to "<<filename<<endl;
 }
 
 void expression::algebra(string algebraExp) { //TESTED
@@ -253,11 +279,39 @@ void expression::algebra(string algebraExp) { //TESTED
 }
 
 void expression::execute(string filename) {
-
+    ifstream ifs;
+    string line;
+    if(filename.empty()) {
+        cout<<"invalid filename"<<endl;
+        return;
+        //throw error
+    }
+    if(filename.find(".spt")>filename.size())
+        filename+=".spt";
+    ifs.open(filename);
+    if(ifs.fail()) {
+        cout<<"file does not exist"<<endl;
+        return;
+        //throw error
+    }
+    cout<<"loaded "<<filename<<endl;
+    while(!ifs.eof())
+    {
+        stringstream ss;
+        getline(ifs, line);
+        if(!line.empty()){
+            ss<<line;
+            getline(ss, line);
+            cout<<"##line: "<<line<<endl;
+            execCommand(line);
+        }
+    }
 }
 
-void expression::record(string filename) {
-
+void expression::recordToFile(string filename, string line) {
+    if(filename.find(".spt")>filename.size())
+        filename+=".spt";
+    saveStringToFile(filename, line, true);
 }
 
 void expression::newton(char funcName, fraction initGuess) {

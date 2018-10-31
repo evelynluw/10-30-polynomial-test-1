@@ -26,6 +26,7 @@ private:
 
     //MAIN FUNCTIONS
     void prompt(); //TESTED
+    void help();
     string getCommand(istream& in); //TESTED
     void execCommand(string command);
     void let(char funcName, string exp);
@@ -35,7 +36,7 @@ private:
     void save(string& filename);
     void algebra(string algebraExp); //TESTED
     void execute(string filename);
-    void record(string filename);
+    void recordToFile(string filename, string line);
     void newton(char funcName, fraction initGuess);
 
     //ADDITIONAL FUNCTIONS
