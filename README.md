@@ -66,12 +66,12 @@ Your program must, as discussed in class, conform to object oriented design cons
 
 ## Extra Credits
 
-Addition of the ability to allow for function composition such as F = G(H), where G and H are algebraic expressions (50 points)
-Addition of the ability to allow for division of expressions, such as F = G/H (50 points)
-Addition of the ability to allow for operations such as F = (2X + 4)^3, without the use of the LET command (this implies that the LET command is depreciated and that the ability of raising an algebraic expression to a positive power is available) (100 points)
-Addition of the ability to solve for all of the zeros of the polynomial expression using Newton's Algorithm (100 points).
-Addition of the ability to do all of the above in multivariate form (x, y, z is the limit). (250 points)
-Addition of the ability to factor expressions. (100 points)
+- Addition of the ability to allow for function composition such as F = G(H), where G and H are algebraic expressions (50 points)
+- Addition of the ability to allow for division of expressions, such as F = G/H (50 points)
+- Addition of the ability to allow for operations such as F = (2X + 4)^3, without the use of the LET command (this implies that the LET command is depreciated and that the ability of raising an algebraic expression to a positive power is available) (100 points)
+- Addition of the ability to solve for all of the zeros of the polynomial expression using Newton's Algorithm (100 points).
+- Addition of the ability to do all of the above in multivariate form (x, y, z is the limit). (250 points)
+- Addition of the ability to factor expressions. (100 points)
 
 ## Resources
 
